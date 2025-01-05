@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class _post extends Model
+class Post extends Model
 {
     use HasFactory;
     protected $table = '_post';
@@ -25,5 +25,12 @@ class _post extends Model
     {
         return $this->belongsTo(_person::class, 'AuthorId', 'id');
     }
-    
+    public function comment()
+    {
+        return $this->hasmany(_comment::class,'id','PostId');
+    }
+    public function vote()
+    {
+        return $this->hasmany(_vote::class,'id','PostId');
+    }
 }

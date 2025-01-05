@@ -22,10 +22,15 @@ use App\Http\Controllers\VoteController;
 use App\Http\Controllers\CategoryController;
 
 // Person Routes
-Route::prefix('person')->group(function() {
-    Route::get('/', [PersonController::class, 'index']);  // Get all people
-    Route::get('/{id}', [PersonController::class, 'show']);  // Get a single person
+// API Routes for PersonController
+Route::prefix('persons')->group(function () {
+    Route::get('/', [PersonController::class, 'index']); // Get all persons
+    Route::get('/{id}', [PersonController::class, 'show']); // Get a specific person
+    Route::post('/', [PersonController::class, 'store']); // Create a new person
+    Route::put('/{id}', [PersonController::class, 'update']); // Update an existing person
+    Route::delete('/{id}', [PersonController::class, 'destroy']); // Delete a person
 });
+
 
 // Admin Routes
 Route::prefix('admin')->group(function() {
@@ -44,6 +49,7 @@ Route::prefix('posts')->group(function() {
 
 // Comment Routes
 Route::prefix('comments')->group(function() {
+    Route::get('/',[CommentController::class,'index']); // Get all comments
     Route::post('/', [CommentController::class, 'store']);  // Create a new comment
     Route::put('/{id}', [CommentController::class, 'update']);  // Update a comment
     Route::delete('/{id}', [CommentController::class, 'destroy']);  // Delete a comment
@@ -70,6 +76,6 @@ Route::prefix('categories')->group(function() {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);  // Delete a category
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+  //  return $request->user();
+//});
