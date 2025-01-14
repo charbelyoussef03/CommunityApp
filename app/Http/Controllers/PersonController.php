@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\_person; 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Hash;
 class PersonController extends Controller
 {
     // Get all persons
@@ -63,6 +63,54 @@ class PersonController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Person not found.'], 404);
         }
+    }
+    //register a user
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'Name' => 'required|string|max:255',
+            'LastName' => 'required|string',
+            'Email' => 'sometimes|email|unique:_person,email,',
+            'PassWord' => 'required|string',
+            'DateOfBirth' => 'required|string',
+        ]);
+
+        $validated['PassWord'] = bcrypt($validated['PassWord']);
+        $person = _person::create($validated);
+
+        return response()->json([
+            'message' => 'User registered successfully.',
+            'person' => $person,
+        ], 201);
+    }
+    // login
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'Name' => 'sometimes|string|max:255',
+            'Email' => 'required|string|email',
+            'PassWord' => 'required|string',
+        ]);
+
+        $person = _person::where('Email', $credentials['Email'])->first();
+
+        if (!$person || !Hash::check($credentials['PassWord'], $person->PassWord)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        $token = $person->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+        'token_type' => 'Bearer',
+        ]);
+    }
+    //logout
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out successfully']);
     }
 
     // Delete a person

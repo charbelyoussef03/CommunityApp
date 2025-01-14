@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class _person extends Model
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens;
 
     protected $table = '_person';
     
@@ -18,5 +19,8 @@ class _person extends Model
         'PassWord',
         'DateOfBirth',
         'IsBanned',
+    ];
+    protected $attributes = [
+        'IsBanned' => false,
     ];
 }

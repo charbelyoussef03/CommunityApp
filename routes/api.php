@@ -21,14 +21,20 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\CategoryController;
 
+Route::post('/login', [PersonController::class, 'login']);
+Route::post('/register',[PersonController::class,'register']);
+//Route::middleware('auth:sanctum')->post('/logout', [PersonController::class, 'logout']);
 // Person Routes
 // API Routes for PersonController
+Route::middleware('auth:sanctum')->group(function () {
+
 Route::prefix('persons')->group(function () {
     Route::get('/', [PersonController::class, 'index']); // Get all persons
     Route::get('/{id}', [PersonController::class, 'show']); // Get a specific person
     Route::post('/', [PersonController::class, 'store']); // Create a new person
     Route::put('/{id}', [PersonController::class, 'update']); // Update an existing person
     Route::delete('/{id}', [PersonController::class, 'destroy']); // Delete a person
+    Route::post('/logout',[PersonController::class,'logout']); // Logout a person
 });
 
 
@@ -76,6 +82,7 @@ Route::prefix('categories')->group(function() {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);  // Delete a category
 });
 
+});
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   //  return $request->user();
 //});
