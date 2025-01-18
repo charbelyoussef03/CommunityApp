@@ -169,7 +169,7 @@ return [
     */
 
     'secure' => env('SESSION_SECURE_COOKIE'),
-
+    'same_site' => 'None', // This allows cross-site cookies (requires HTTPS)
     /*
     |--------------------------------------------------------------------------
     | HTTP Access Only

@@ -20,15 +20,19 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthController;
+//Route::middleware(['auth:sanctum'])->post('/login', [PersonController::class, 'login']);
 
-Route::post('/login', [PersonController::class, 'login']);
-Route::post('/register',[PersonController::class,'register']);
+Route::post('/login', [PersonController::class, 'login'])->name('api.login');//->middleware('web');
+Route::post('/register',[PersonController::class,'register'])->name('api.register');
 //Route::middleware('auth:sanctum')->post('/logout', [PersonController::class, 'logout']);
 // Person Routes
 // API Routes for PersonController
+
 Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('persons')->group(function () {
+
     Route::get('/', [PersonController::class, 'index']); // Get all persons
     Route::get('/{id}', [PersonController::class, 'show']); // Get a specific person
     Route::post('/', [PersonController::class, 'store']); // Create a new person

@@ -285,7 +285,6 @@
             <li><a href="{{ route('HomePage') }}">Home</a></li>
             <li><a href="{{ route('Profile') }}">Profile</a></li>
             <li><a href="{{ route('CreatePost') }}">Create Post</a></li>
-            <li><a href="{{ route('Login') }}">Login</a></li>
             <li><a href="{{ route('About') }}">About</a></li>
             <li><a href="{{ route('Contact') }}">Contact</a></li>
         </ul>

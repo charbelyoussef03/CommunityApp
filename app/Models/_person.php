@@ -23,4 +23,5 @@ class _person extends Model
     protected $attributes = [
         'IsBanned' => false,
     ];
+    
 }

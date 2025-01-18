@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('Login');
+})->name('Login');
+
+Route::get('/HomePage', function () {
     return view('HomePage');
 })->name('HomePage');
 
@@ -25,9 +29,9 @@ Route::get('/CreatePost', function () {
     return view('CreatePost');
 })->name('CreatePost');
 
-Route::get("/Login", function () {
-    return view('Login');
-})->name('Login');
+//Route::get("/Login", function () {
+  //  return view('Login');
+//})->name('Login');
 
 Route::get('/About', function () {
     return view('About');
