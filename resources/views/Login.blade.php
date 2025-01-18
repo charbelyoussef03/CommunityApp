@@ -8,7 +8,7 @@
         <ul id="error-list"></ul>
     </div>
     <form id="login-form">
-
+       @csrf
         <div class="form-group">
             <label for="Name">Name</label>
             <input type="name" id="Name" name="Name" placeholder="Enter your name" required>
@@ -58,8 +58,9 @@
             });
 
             const result = await response.json();
-
+            console.log(result); 
             if (response.ok) {
+                localStorage.setItem('access_token', result.access_token);
                 alert('Login successful!');
                 // Optionally, redirect to another page
                 window.location.href = "{{ route('HomePage') }}"; // Update with the appropriate route

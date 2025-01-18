@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\_person; 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 class PersonController extends Controller
 {
     // Get all persons
@@ -25,7 +27,16 @@ class PersonController extends Controller
             return response()->json(['error' => 'Person not found.'], 404);
         }
     }
-
+    public function getAuthenticatedUser()
+    {
+        $user = Auth::user();
+       
+        if ($user) {
+            return response()->json($user);
+        } else {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+    }
     // Create a new person
     public function store(Request $request)
     {

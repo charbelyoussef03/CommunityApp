@@ -3,31 +3,35 @@
 @section('content')
 <div class="profile-container">
     <h1>Profile</h1>
-    <div class="user-details">
-        <h2>Name</h2>
-        <p><strong>Email:</strong>x.test.com </p>
-        <p><strong>Joined:</strong> monday 12th 2025 </p>
-    </div>
-
-    <div class="user-content">
-        <h3>Your Posts</h3>
-            <ul>
-                
-                    <li>
-                        <a href="">title</a>
-                        <p>content</p>
-                        <small>Posted on: xxxxxxxxxx</small>
-                    </li>
-            </ul>
-    </div>
-
-    <div class="user-activity">
-        <h3>Your Activity</h3>
-        <ul>
-            <li><strong>Comments:</strong> 100 </li>
-            <li><strong>Likes:</strong> 2000 </li>
-            <li><strong>Upvotes:</strong> 5 </li>
-        </ul>
+    <div id="user-details">
+        <p>Loading user details...</p>
     </div>
 </div>
+
+<script>
+    fetch('/api/user', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data. Please log in again.');
+            }
+            return response.json();
+        })
+        .then(user => {
+            const userDetails = document.getElementById('user-details');
+            userDetails.innerHTML = `
+                <h2>${user.Name}</h2>
+                <p><strong>Email:</strong> ${user.Email}</p>
+                <p><strong>Joined:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+            document.getElementById('user-details').innerHTML = `<p>Error loading user details. Please try again later.</p>`;
+        });
+</script>
 @endsection

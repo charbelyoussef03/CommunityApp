@@ -28,12 +28,13 @@ Route::post('/register',[PersonController::class,'register'])->name('api.registe
 //Route::middleware('auth:sanctum')->post('/logout', [PersonController::class, 'logout']);
 // Person Routes
 // API Routes for PersonController
-
+Route::get('/user',[PersonController::class,'getAuthenticatedUser'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('persons')->group(function () {
 
     Route::get('/', [PersonController::class, 'index']); // Get all persons
+    //Route::get('/user',[PersonController::class,'getAuthenticatedUser']);
     Route::get('/{id}', [PersonController::class, 'show']); // Get a specific person
     Route::post('/', [PersonController::class, 'store']); // Create a new person
     Route::put('/{id}', [PersonController::class, 'update']); // Update an existing person
