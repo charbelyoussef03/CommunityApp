@@ -37,6 +37,7 @@ class PersonController extends Controller
             return response()->json(['error' => 'User not authenticated'], 401);
         }
     }
+    
     // Create a new person
     public function store(Request $request)
     {

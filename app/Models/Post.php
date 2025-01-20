@@ -10,17 +10,25 @@ class Post extends Model
     use HasFactory;
     protected $table = '_post';
     protected $fillable = [
-        'AuthorId',
         'Title',
-        'ViewsCount',
-        'LikesCount',
         'Category',
-        'IsFlagged',
-        'IsApproved',
         'Content',
         'PictureUrl',
+        'ViewsCount',
+        'LikesCount',
+        'IsFlagged',
+        'IsApproved',
+        'AuthorId'
     ];
 
+    protected $attributes = [
+        'ViewsCount' => 0,       // Default ViewsCount
+        'LikesCount' => 0,       // Default LikesCount
+        'IsFlagged' => false,    // Default IsFlagged
+        'IsApproved' => false,   // Default IsApproved
+          
+    ];
+   
     public function person()
     {
         return $this->belongsTo(_person::class, 'AuthorId', 'id');

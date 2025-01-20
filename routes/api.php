@@ -29,6 +29,10 @@ Route::post('/register',[PersonController::class,'register'])->name('api.registe
 // Person Routes
 // API Routes for PersonController
 Route::get('/user',[PersonController::class,'getAuthenticatedUser'])->middleware('auth:sanctum');
+Route::get('/user/posts',[PostController::class,'getUserPosts'])->middleware('auth:sanctum'); 
+
+Route::post('/post', [PostController::class, 'store'])->middleware('auth:sanctum')->name('posts.store');  // Create a new post
+
 Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('persons')->group(function () {
@@ -40,6 +44,7 @@ Route::prefix('persons')->group(function () {
     Route::put('/{id}', [PersonController::class, 'update']); // Update an existing person
     Route::delete('/{id}', [PersonController::class, 'destroy']); // Delete a person
     Route::post('/logout',[PersonController::class,'logout']); // Logout a person
+
 });
 
 
@@ -52,10 +57,11 @@ Route::prefix('admin')->group(function() {
 // Post Routes
 Route::prefix('posts')->group(function() {
     Route::get('/', [PostController::class, 'index']);  // Get all posts
-    Route::post('/', [PostController::class, 'store']);  // Create a new post
+    //Route::post('/', [PostController::class, 'store'])->name('posts.store');  // Create a new post
     Route::get('/{id}', [PostController::class, 'show']);  // Get a specific post
     Route::put('/{id}', [PostController::class, 'update']);  // Update a post
     Route::delete('/{id}', [PostController::class, 'destroy']);  // Delete a post
+// Get Authenticated user posts
 });
 
 // Comment Routes

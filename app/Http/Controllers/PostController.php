@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,28 +16,50 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    // Get the authenticated user
+    $user = Auth::user();
+
+    // Ensure that the user is authenticated
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated'], 401);
+    }
+
+    // Validate the incoming request
+    try {
         $validated = $request->validate([
             'Title' => 'required|string|max:255',
             'Category' => 'required|string',
-            'AuthorId' => 'required|exists:_person,id',
-            'ViewsCount' => 'nullable|integer',
-            'LikesCount' => 'nullable|integer',
-            'IsFlagged' => 'required|boolean',
-            'IsApproved' => 'required|boolean',
             'Content' => 'required|string',
-            'PictureUrl' => 'required|string'
+            'PictureUrl' => 'required|string',
+        ]);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json(['errors' => $e->errors()], 422);
+    }
+
+    // Create the post
+    try {
+        $post = Post::create([
+            'Title' => $validated['Title'],
+            'Category' => $validated['Category'],
+            'Content' => $validated['Content'],
+            'PictureUrl' => $validated['PictureUrl'],
+            'AuthorId' => $user->id, // Use the authenticated user's ID
+            'ViewsCount' => 0, // Default value for ViewsCount
+            'LikesCount' => 0, // Default value for LikesCount
+            'IsFlagged' => false, // Default value for IsFlagged
+            'IsApproved' => false, // Default value for IsApproved
         ]);
 
-        $post = Post::create(array_merge($validated, [
-            'ViewsCount' => $request->input('ViewsCount', 0),
-            'LikesCount' => 0,
-            'IsFlagged' => false,
-            'IsApproved' => false,
-        ]));
-
-        return response()->json($post, 201);
+        return response()->json([
+            'message' => 'Post created successfully!',
+            'post' => $post
+        ], 201);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Server error.'], 500);
     }
+}
+
 
     public function show(string $id)
     {
@@ -64,7 +87,16 @@ class PostController extends Controller
         $post->update($validated);
         return response()->json($post);
     }
+    public function getUserPosts()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
+        $posts = $user->posts;
+        return response()->json(['posts' => $posts], 200);
+    }
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);

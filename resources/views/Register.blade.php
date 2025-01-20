@@ -59,6 +59,7 @@
 
             if (response.ok) {
                 alert('Registration successful!');
+                window.location.href = "{{ route('Login') }}";
                 form.reset();
             } else {
                 // Show validation errors
