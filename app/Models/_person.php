@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class _person extends Model
 {
@@ -26,6 +25,6 @@ class _person extends Model
     ];
     public function posts()
     {
-        return $this->hasMany(Post::class,'id','AuthorId');
+        return $this->hasMany(Post::class,'AuthorId','id');
     }
 }

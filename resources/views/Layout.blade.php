@@ -271,6 +271,161 @@
     .user-activity li {
         margin-bottom: 10px;
     }
+
+    /* about */
+    .about-container {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.hero-section {
+    text-align: center;
+    background: linear-gradient(135deg,#2a2a72,rgba(62, 142, 65, 0.43));
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+}
+
+.about-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.about-tagline {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.about-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.about-card h2 {
+    font-size: 1.8rem;
+    color: #2a2a72;
+    margin-bottom: 0.5rem;
+}
+
+.values-list {
+    list-style: none;
+    padding: 0;
+}
+
+.values-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.values-list li::before {
+    content: '✔';
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+/*profile styles */
+ /* Overall Profile Container */
+ .profile-container {
+        margin: 20px auto;
+        max-width: 800px;
+        padding: 20px;
+        background: #f7f9fc;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header */
+    .profile-container h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* User Details Container */
+    .user-details-container,
+    .posts-container {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #fff;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .user-details-container p,
+    .posts-container p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    /* Post Styling */
+    .post {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: #f9f9f9;
+    }
+
+    .post h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.2rem;
+        color: #2a2a72;
+    }
+
+    .post p {
+        margin: 0 0 10px 0;
+        font-size: 0.95rem;
+        color: #444;
+    }
+
+    .post small {
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    /* Loading State */
+    #user-details p,
+    #posts-container p {
+        text-align: center;
+        font-style: italic;
+        animation: fade 1.5s infinite;
+    }
+
+    /* Fade animation for loading state */
+    @keyframes fade {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+
     </style>
 </head>
 <body>

@@ -3,15 +3,17 @@
 @section('content')
 <div class="profile-container">
     <h1>Profile</h1>
-    <div id="user-details">
+    <div id="user-details" class="user-details-container">
         <p>Loading user details...</p>
     </div>
-    <div id="posts-container">
+    <div id="posts-container" class="posts-container">
         <p>Loading posts details...</p>
     </div>
 </div>
 
+
 <script>
+    // Fetch user details
     fetch('/api/user', {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -27,7 +29,7 @@
         .then(user => {
             const userDetails = document.getElementById('user-details');
             userDetails.innerHTML = `
-                <h2>${user.Name} ${user.LastName} </h2>
+                <h2>Welcome ${user.Name} ${user.LastName} </h2>
                 <p><strong>Email:</strong> ${user.Email}</p>
                 <p><strong>Date of Birth:</strong> ${user.DateOfBirth}</p>
                 <p><strong>Joined:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
@@ -38,7 +40,8 @@
             document.getElementById('user-details').innerHTML = `<p>Error loading user details. Please try again later.</p>`;
         });
 
-        document.addEventListener('DOMContentLoaded', async function () {
+    // Fetch user posts
+    document.addEventListener('DOMContentLoaded', async function () {
         const token = localStorage.getItem('access_token'); // Retrieve the access token
 
         if (!token) {
@@ -63,6 +66,7 @@
 
                 // Populate the posts dynamically
                 if (result.posts && result.posts.length > 0) {
+                    postsContainer.innerHTML = ''; // Clear loading message
                     result.posts.forEach(post => {
                         const postDiv = document.createElement('div');
                         postDiv.className = 'post';
