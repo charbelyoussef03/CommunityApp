@@ -32,6 +32,10 @@ Route::get('/user',[PersonController::class,'getAuthenticatedUser'])->middleware
 Route::get('/user/posts',[PostController::class,'getUserPosts'])->middleware('auth:sanctum'); 
 
 Route::post('/post', [PostController::class, 'store'])->middleware('auth:sanctum')->name('posts.store');  // Create a new post
+Route::post('/like', [PostController::class, 'likePost'])->middleware('auth:sanctum');
+Route::post('/comment', [PostController::class, 'addComment'])->middleware('auth:sanctum');
+Route::get('/posts', [PostController::class, 'index'])->middleware('auth'); 
+//Route::post('/', [CommentController::class, 'store'])->middleware('auth');
 
 Route::middleware('auth:sanctum')->group(function () {
 

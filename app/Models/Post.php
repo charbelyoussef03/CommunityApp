@@ -33,9 +33,9 @@ class Post extends Model
     {
         return $this->belongsTo(_person::class, 'AuthorId', 'id');
     }
-    public function comment()
+    public function comments()
     {
-        return $this->hasmany(_comment::class,'id','PostId');
+        return $this->hasmany(_comment::class,'PostId','id')->with('person');
     }
     public function vote()
     {

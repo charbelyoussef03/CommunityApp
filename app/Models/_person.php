@@ -27,4 +27,8 @@ class _person extends Model
     {
         return $this->hasMany(Post::class,'AuthorId','id');
     }
+    public function comments()
+    {
+        return $this->hasMany(_comment::class, 'AuthorId', 'id');
+    }
 }

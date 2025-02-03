@@ -18,13 +18,17 @@ class _comment extends Model
         'IsFlagged',
         'createdAt',
     ];
+    protected $attributes = [
+        'LikesCount' => 0,
+        'IsFlagged'=>false
+    ];
     public function person()
     {
         return $this->belongsTo(_person::class, 'UserId', 'id');
     }
     public function post()
     {
-        return $this->belongsTo(_post::class,'PostId','id');
+        return $this->belongsTo(Post::class,'PostId','id');
     }
     
 }

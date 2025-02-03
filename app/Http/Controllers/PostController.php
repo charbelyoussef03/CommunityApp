@@ -6,20 +6,26 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Like;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['person'])->get();
-        return response()->json($posts);
+        $posts = Post::with(['comments.person', 'person'])->get();
+
+        return response()->json([
+            'success' => true,
+            'posts' => $posts,
+        ]);
     }
+
 
     public function store(Request $request)
 {
     // Get the authenticated user
     $user = Auth::user();
-
+    
     // Ensure that the user is authenticated
     if (!$user) {
         return response()->json(['error' => 'User not authenticated'], 401);
@@ -71,6 +77,91 @@ class PostController extends Controller
         }
     }
 
+    public function getPosts()
+    {
+    $posts = Post::with(['comments', 'likes'])->get();
+    return response()->json(['success' => true, 'posts' => $posts]);
+    }
+
+    public function likePost(Request $request)
+{
+    // Validate input
+    $request->validate([
+        'PostId' => 'required|exists:_post,id',
+    ]);
+
+    $user = auth()->user();
+    if (!$user) {
+        return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+    }
+
+    // Check if the user already liked the post
+    $existingLike = Like::where('UserId', $user->id)
+                        ->where('PostId', $request->PostId)
+                        ->first();
+
+    if ($existingLike) {
+        return response()->json([
+            'success' => false,
+            'message' => 'You have already liked this post!',
+        ], 400);
+    }
+
+    // Add a new like record
+    Like::create([
+        'UserId' => $user->id,
+        'PostId' => $request->PostId,
+    ]);
+
+    // Increment the LikesCount on the post
+    $post = Post::findOrFail($request->PostId);
+    $post->increment('LikesCount');
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Post liked successfully!',
+        'LikesCount' => $post->LikesCount,
+    ]);
+}
+
+    
+    public function addComment(Request $request)
+    {
+        // Manually authenticate user
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+    
+        // Validate the request
+        $request->validate([
+            'PostId' => 'required|exists:_post,id',
+            'Content' => 'required|string|min:1|max:500',
+        ]);
+    
+        try {
+            // Find the post
+            $post = Post::findOrFail($request->PostId);
+    
+            // Create the comment
+            $comment = $post->comments()->create([
+                'UserId' => $user->id, // Use authenticated user ID
+                'Content' => $request->Content,
+            ]);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment added successfully',
+                'comment' => $comment->load('person'),
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error adding comment: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to add comment'], 500);
+        }
+    }
+
+    
+    
     public function update(Request $request, string $id)
     {
         $post = Post::findOrFail($id);
