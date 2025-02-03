@@ -36,7 +36,11 @@ Route::post('/like', [PostController::class, 'likePost'])->middleware('auth:sanc
 Route::post('/comment', [PostController::class, 'addComment'])->middleware('auth:sanctum');
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth'); 
 //Route::post('/', [CommentController::class, 'store'])->middleware('auth');
+Route::get('/search', [PostController::class, 'searchPosts']);
 
+
+Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum'); // Update a post
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');  // Delete a post
 Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('persons')->group(function () {
@@ -63,8 +67,8 @@ Route::prefix('posts')->group(function() {
     Route::get('/', [PostController::class, 'index']);  // Get all posts
     //Route::post('/', [PostController::class, 'store'])->name('posts.store');  // Create a new post
     Route::get('/{id}', [PostController::class, 'show']);  // Get a specific post
-    Route::put('/{id}', [PostController::class, 'update']);  // Update a post
-    Route::delete('/{id}', [PostController::class, 'destroy']);  // Delete a post
+    //Route::put('/{id}', [PostController::class, 'update']);  // Update a post
+    //Route::delete('/posts/{id}', [PostController::class, 'destroy']);  // Delete a post
 // Get Authenticated user posts
 });
 

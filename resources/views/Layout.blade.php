@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
     <title>Sharely</title>
     <style>
         /* Base Styles */
@@ -425,6 +426,392 @@
             opacity: 0.5;
         }
     }
+
+/* homepage */
+/* General Styles */
+/* General Styles */
+body {
+ 
+}
+
+/* Feed Container */
+.feed-wrapper {
+    max-width: 600px !important;
+    width: 100% !important;
+    margin: 20px auto !important;
+    padding: 10px !important;
+}
+.feed-title{
+   text-align : center;
+}
+/* Post Card */
+.feed-post {
+    background: #fff !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    transition: box-shadow 0.3s ease-in-out !important;
+}
+
+.feed-post:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Post Header */
+.feed-post-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.feed-post-title {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+/* Post Content */
+.feed-post-content {
+    font-size: 15px !important;
+    color: #555 !important;
+    margin-top: 10px !important;
+    line-height: 1.5 !important;
+}
+
+/* Post Actions */
+.feed-post-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: 10px !important;
+    border-top: 1px solid #eee !important;
+    padding-top: 8px !important;
+}
+
+/* Like Button */
+.feed-like-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    background: none !important;
+    border: none !important;
+    font-weight: bold !important;
+    color: #1877f2 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    padding: 6px 12px !important;
+    border-radius: 5px !important;
+}
+
+.feed-like-btn:hover {
+    background: rgba(24, 119, 242, 0.1) !important;
+}
+
+.feed-like-btn.liked {
+    color: #ff3e4d !important;
+    pointer-events: none !important;
+}
+
+/* Comments Section */
+.feed-comments {
+    margin-top: 15px !important;
+    padding-top: 10px !important;
+}
+
+.feed-comments-title {
+    font-weight: bold !important;
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+}
+
+.feed-comments-list {
+    list-style-type: none !important;
+    padding: 0 !important;
+    max-height: 180px !important;
+    overflow-y: auto !important;
+}
+
+/* Comment Item */
+.feed-comment-item {
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    background: #f5f5f5 !important;
+    margin-bottom: 6px !important;
+    font-size: 14px !important;
+    transition: 0.3s ease !important;
+}
+
+.feed-comment-item:hover {
+    background: #e9ecef !important;
+}
+
+/* Comment Input */
+.feed-comment-input-box {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+}
+
+.feed-comment-input {
+    flex: 1 !important;
+    padding: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+}
+
+.feed-comment-input:focus {
+    border-color: #1877f2 !important;
+}
+
+/* Comment Button */
+.feed-comment-btn {
+    background: #2a2a72 !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: background 0.3s ease-in-out !important;
+}
+
+.feed-comment-btn:hover {
+    background: #36992b !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .feed-wrapper {
+        max-width: 100% !important;
+        padding: 10px !important;
+    }
+}
+
+/* 🔍 Search Bar Wrapper */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Search Bar Box */
+.search-bar {
+    display: flex;
+    background: white;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    width: 500px;
+    max-width: 100%;
+}
+
+/* 🔎 Search Input */
+.search-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    font-size: 16px;
+    border-radius: 30px 0 0 30px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* 📂 Category Filter */
+.search-filter {
+    background: #f8f9fa;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 0 30px 30px 0;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🖱️ Hover & Focus Effects */
+.search-input:focus {
+    background: #f0f2f5;
+}
+
+.search-filter:hover {
+    background: #e2e6ea;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 100%;
+    }
+}
+
+    /* 📂 Category Filter Dropdown */
+.custom-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 0 30px 30px 0;
+    padding: 0 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Styled Select */
+.filter-dropdown {
+    appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 12px 30px 12px 10px;
+    outline: none;
+    color: #333;
+}
+
+/* Custom Dropdown Arrow */
+.custom-dropdown::after {
+    content: "▼";
+    font-size: 12px;
+    position: absolute;
+    right: 12px;
+    color: #777;
+    pointer-events: none;
+}
+
+/* Hover Effects */
+.custom-dropdown:hover {
+    background: #e2e6ea;
+}
+
+.filter-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(24, 119, 242, 0.3);
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+/* ✅ General Improvements */
+:root {
+    --primary-color: #007bff;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --text-color: #333;
+    --border-radius: 8px;
+    --transition-speed: 0.3s ease-in-out;
+}
+
+/* 🔹 Post Actions (Edit & Delete Buttons) */
+.post-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 🔹 Edit Form Container */
+.edit-form-container {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    transition: var(--transition-speed);
+}
+
+/* 🔹 Input Fields */
+.edit-input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 15px;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    transition: var(--transition-speed);
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+/* 🔹 Buttons (Edit, Save, Cancel, Delete) */
+.action-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-speed);
+}
+
+/* ✅ Edit Button */
+.edit-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ Save Button */
+.save-btn {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+/* ✅ Cancel Button */
+.cancel-btn {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+/* ✅ Delete Button */
+.delete-btn {
+    background-color: #ff4d4f;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #d9363e;
+}
+
 
     </style>
 </head>

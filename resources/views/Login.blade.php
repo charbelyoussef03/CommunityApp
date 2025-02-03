@@ -9,10 +9,6 @@
     </div>
     <form id="login-form">
        @csrf
-        <div class="form-group">
-            <label for="Name">Name</label>
-            <input type="name" id="Name" name="Name" placeholder="Enter your name" required>
-       </div>
         
         <div class="form-group">
             <label for="Email">Email Address</label>

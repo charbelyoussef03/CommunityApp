@@ -85,7 +85,7 @@ class PostController extends Controller
 
     public function likePost(Request $request)
 {
-    // Validate input
+    
     $request->validate([
         'PostId' => 'required|exists:_post,id',
     ]);
@@ -95,7 +95,7 @@ class PostController extends Controller
         return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
     }
 
-    // Check if the user already liked the post
+    
     $existingLike = Like::where('UserId', $user->id)
                         ->where('PostId', $request->PostId)
                         ->first();
@@ -113,7 +113,7 @@ class PostController extends Controller
         'PostId' => $request->PostId,
     ]);
 
-    // Increment the LikesCount on the post
+    
     $post = Post::findOrFail($request->PostId);
     $post->increment('LikesCount');
 
@@ -160,24 +160,61 @@ class PostController extends Controller
         }
     }
 
-    
-    
-    public function update(Request $request, string $id)
+    public function searchPosts(Request $request)
     {
-        $post = Post::findOrFail($id);
+        $query = $request->input('query');
+        $category = $request->input('category');
 
+        $posts = Post::query();
+
+        // Search by title
+        if (!empty($query)) {
+            $posts->where('Title', 'LIKE', "%{$query}%");
+        }
+
+        // Filter by category
+        if (!empty($category)) {
+            $posts->where('Category', $category);
+        }
+
+        return response()->json([
+            'success' => true,
+            'posts' => $posts->with('comments.person')->get()
+        ]);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+    
+        
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
+    
+        
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    
+        
+        if ($post->AuthorId !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
+       
         $validated = $request->validate([
             'Title' => 'sometimes|string|max:255',
             'Content' => 'sometimes|string',
-            'Category' => 'required|string',
-            'PictureUrl' => 'required|string',
-            'IsApproved' => 'required|boolean',
-            'IsFlagged' => 'required|boolean',
         ]);
-       
+    
+        
         $post->update($validated);
-        return response()->json($post);
+    
+        return response()->json(['success' => true, 'message' => 'Post updated successfully', 'post' => $post]);
     }
+    
     public function getUserPosts()
     {
         $user = Auth::user();
